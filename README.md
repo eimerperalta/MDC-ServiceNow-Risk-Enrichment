@@ -1,6 +1,6 @@
 # Defender for Cloud → ServiceNow Risk Enrichment (Logic App)
 
-This Logic App enriches ServiceNow incidents that originate from **Microsoft Defender for Cloud** with the **contextual risk level** of the referenced recommendation (assessment). It pulls incidents from the last 24 hours from ServiceNow, extracts the **full assessment `id`**, queries **Azure Resource Graph (ARG)** for that exact item, and updates the incident with the `risk_level` (High/Medium/Low or Unknown).
+This Logic App enriches ServiceNow incidents that originate from **Microsoft Defender for Cloud** with the **contextual risk level** of the referenced recommendation (assessment). It pulls incidents from the last 24 hours from ServiceNow, extracts the **full assessment `id`**, queries **Azure Resource Graph (ARG)** for that exact item, and updates the incident with the `risk_level` (Critical/High/Medium/Low or Unknown).
 
 - Azure Resource Graph is invoked via the **ARM endpoint** and returns results under a `data` array—this is the documented REST contract.
 - The data is queried from the **`securityresources`** table which surfaces Microsoft Defender for Cloud entities (assessments, subassessments, etc.). Filtering on **`id =~ '<full id>'`** targets the per‑resource assessment instance.
@@ -14,6 +14,7 @@ This Logic App enriches ServiceNow incidents that originate from **Microsoft Def
 2. Permission to **create a Logic App** and **create a Microsoft.Web/connection** (ServiceNow).  
 3. Permission to assign **Reader** on the subscription(s) you will query with ARG (for the Logic App’s managed identity). ARG only returns what the caller can see (RBAC‑scoped).   
 4. Your **ServiceNow** instance details and credentials to authorize the connection after deployment.
+5. Microsoft Defender for Cloud enabled on the subscription(s) you will query with the Defender CSPM plan (which includes risk prioritization).
 
 ---
 
