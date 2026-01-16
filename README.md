@@ -2,9 +2,9 @@
 
 This Logic App enriches ServiceNow incidents that originate from **Microsoft Defender for Cloud** with the **contextual risk level** of the referenced recommendation (assessment). It pulls incidents from the last 24 hours from ServiceNow, extracts the **full assessment `id`**, queries **Azure Resource Graph (ARG)** for that exact item, and updates the incident with the `risk_level` (High/Medium/Low or Unknown).
 
-- Azure Resource Graph is invoked via the **ARM endpoint** and returns results under a `data` array—this is the documented REST contract. [1](https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources?view=rest-azureresourcegraph-resourcegraph-2024-04-01)  
-- The data is queried from the **`securityresources`** table which surfaces Microsoft Defender for Cloud entities (assessments, subassessments, etc.). Filtering on **`id =~ '<full id>'`** targets the per‑resource assessment instance. [2](https://learn.microsoft.com/en-us/azure/defender-for-cloud/resource-graph-samples)[3](https://learn.microsoft.com/en-us/azure/governance/resource-graph/reference/supported-tables-resources)  
-- The HTTP action authenticates with **Managed Identity** and uses the **audience** `https://management.azure.com`. [4](https://learn.microsoft.com/en-us/azure/logic-apps/authenticate-with-managed-identity)
+- Azure Resource Graph is invoked via the **ARM endpoint** and returns results under a `data` array—this is the documented REST contract.
+- The data is queried from the **`securityresources`** table which surfaces Microsoft Defender for Cloud entities (assessments, subassessments, etc.). Filtering on **`id =~ '<full id>'`** targets the per‑resource assessment instance.
+- The HTTP action authenticates with **Managed Identity** and uses the **audience** `https://management.azure.com`.
 
 ---
 
@@ -12,7 +12,7 @@ This Logic App enriches ServiceNow incidents that originate from **Microsoft Def
 
 1. An Azure subscription and a resource group where you can deploy.  
 2. Permission to **create a Logic App** and **create a Microsoft.Web/connection** (ServiceNow).  
-3. Permission to assign **Reader** on the subscription(s) you will query with ARG (for the Logic App’s managed identity). ARG only returns what the caller can see (RBAC‑scoped). [1](https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources?view=rest-azureresourcegraph-resourcegraph-2024-04-01)  
+3. Permission to assign **Reader** on the subscription(s) you will query with ARG (for the Logic App’s managed identity). ARG only returns what the caller can see (RBAC‑scoped).   
 4. Your **ServiceNow** instance details and credentials to authorize the connection after deployment.
 
 ---
@@ -28,12 +28,15 @@ This Logic App enriches ServiceNow incidents that originate from **Microsoft Def
 ---
 
 ## Deploy
-You can deploy this ARM template via the Azure Portal or Azure CLI.
+You can deploy this ARM template by clicking on the blue **Deploy to Azure** button below, via the Azure Portal or Azure CLI.
+
+### Option A — ARM Template
+
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Feimerperalta%2FMDC-ServiceNow-Risk-Enrichment%2Frefs%2Fheads%2Fmain%2Fazuredeploy.json" target="_blank">
     <img src="https://aka.ms/deploytoazurebutton"/>
 </a>
 
-### Option A — Azure Portal
+### Option B — Azure Portal
 1. Go to **Deploy a custom template** in the Azure portal.  
 2. Upload `azuredeploy.json`.  
 3. Fill parameters:
@@ -43,7 +46,7 @@ You can deploy this ARM template via the Azure Portal or Azure CLI.
    - **arg_subscriptions**: e.g., `["<your-subscription-id>"]`
 4. Click **Review + create** → **Create**.
 
-### Option B — Azure CLI
+### Option C — Azure CLI
 ```bash
 # Set variables
 RG=<your-resource-group> # e.g. myResourceGroup
