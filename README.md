@@ -15,6 +15,8 @@ This Logic App enriches ServiceNow incidents that originate from **Microsoft Def
 3. Permission to assign **Reader** on the subscription(s) you will query with ARG (for the Logic App’s managed identity). ARG only returns what the caller can see (RBAC‑scoped).   
 4. Your **ServiceNow** instance details and credentials to authorize the connection after deployment.
 5. Microsoft Defender for Cloud enabled on the subscription(s) you will query with the Defender CSPM plan (which includes risk prioritization).
+6. Built-in integration between Microsoft Defender for Cloud and ServiceNow set up, so that incidents are created in ServiceNow from Defender recommendations (see [Integrate with ServiceNow](https://learn.microsoft.com/en-us/azure/defender-for-cloud/integrate-with-servicenow)).
+7. Existing ServiceNow incidents created from Microsoft Defender for Cloud recommendations to validate the enrichment.
 
 ---
 
