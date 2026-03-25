@@ -9,6 +9,9 @@ Every day, the Logic App:
 3. Queries **Azure Resource Graph (ARG)** for the matching assessment's risk level.
 4. Updates the ServiceNow incident with a comment: `Risk level (MDC): Critical | High | Medium | Low | Unknown`.
 
+### Quick deployment:
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Feimerperalta%2FMDC-ServiceNow-Risk-Enrichment%2Frefs%2Fheads%2Fmain%2Fazuredeploy.json)
+
 ### How it works
 
 | Component | Detail |
